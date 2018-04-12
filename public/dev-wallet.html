@@ -1,0 +1,137 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+    <style>
+      .ui.container {
+        margin: 2em 0em;
+      }
+
+      .ui.container > h1 {
+        font-size: 3em;
+      }
+
+      .ui.container > h2.dividing.header {
+        font-size: 2em;
+        font-weight: normal;
+        margin: 2em 0em 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ui container">
+      <h1>Mobius Wallet App Dev Auth</h1>
+
+      <h2 class="ui dividing header">Application</h2>
+
+      <form class="ui form">
+        <div class="field">
+          <label>Auth endpoint:</label>
+          <input type="text" value="http://localhost:3000/auth" id="url"></input>
+        </div>
+        <div class="field">
+          <label>Redirect URI:</label>
+          <input type="text" value="http://localhost:3000" id="redirect_url"></input>
+        </div>
+        <div class="field">
+          <label>Public Key:</label>
+          <input type="text" value="GDQG5EB2WTCID57O6QGNZCWY7VOL4U64IU5ZBQF647NULUJRIYZ4ULLX"></input>
+        </div>
+        <div class="field">
+          <label>Private Key:</label>
+          <input type="text" value="SAS3NMLVAU2ZYWNIQJDE64KIZM26I5DBIJOXYRLQQTJHXIL2OA3NJZMI"></input>
+        </div>
+      </form>
+
+      
+
+      <h2 class="ui dividing header">Normal Account</h2>
+
+      <form class="ui form">
+        <div class="field">
+          <input type="text" value="GBAZTKOK5QFRPPXUCJVJP6ZUCXZ4FDRZTE4HTD3QYPE7IP7LHERM77SI" />
+        </div>
+        <div class="field">
+          <input type="text" value="SAAMRXVCW5UZN3KKZWQFZYU4CXCX2HJBR5YMBR2C6QWRSPVPP6IM7MXW" class="seed" />
+        </div>
+        <div class="field">
+          <input type="submit" class="ui button green" value="Open" />
+        </div>
+      </form>
+
+      
+
+      <h2 class="ui dividing header">Zero Balance Account</h2>
+
+      <form class="ui form">
+        <div class="field">
+          <input type="text" value="GD7JEYX3ZBPHNIO555C3VPEBQT7R5ISZ7QNNAN7GJ4T5JPSXAJRO5D63" />
+        </div>
+        <div class="field">
+          <input type="text" value="SAZCU6SIQET4FY6IWDSBNRTU6IHYRRT6SCEIQBEAJMDVWUWXGT3LJ7T6" class="seed" />
+        </div>
+        <div class="field">
+          <input type="submit" class="ui button green" value="Open" />
+        </div>
+      </form>
+
+      
+
+      <h2 class="ui dividing header">Unauthorized Account</h2>
+
+      <form class="ui form">
+        <div class="field">
+          <input type="text" value="GDSFCIWA5PSGOT343MTLP2SRJN4UA4OUA3OZCGMNVYMJUQOEBYWGOW7A" />
+        </div>
+        <div class="field">
+          <input type="text" value="SCIXLQNZGGEE6IO6WE5ZNCNGXNDDUEX4WCHYFK3HICDECRBKVNHWYOV5" class="seed" />
+        </div>
+        <div class="field">
+          <input type="submit" class="ui button green" value="Open" />
+        </div>
+      </form>
+
+      
+    </div>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/0.8.0/stellar-sdk.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
+  <script>
+    StellarSdk.Network.useTestNetwork()
+
+    $(function() {
+      $(".ui.button").on('click', function(e) {
+        e.preventDefault();
+        var seed = $(e.target).closest('.ui.form').find('.seed:first').val();
+        var keypair = StellarSdk.Keypair.fromSecret(seed);
+        var endpoint = $('#url').val();
+
+        var showError = function(err) {
+          if (err) {
+            alert(err);
+          }
+        }
+
+        // NOTE: this should be replaced with mobius js sdk calls
+        axios.get(endpoint).then(function(response) {
+          var xdr = response.data;
+          var tx = new StellarSdk.Transaction(xdr);
+          tx.sign(keypair);
+          var signedChallenge = tx.toEnvelope().toXDR("base64");
+          axios({
+            url: endpoint,
+            method: 'post',
+            params: {
+              xdr: signedChallenge,
+              public_key: keypair.publicKey()
+            }
+          }).then(function(response) {
+            var url = $('#redirect_url').val();
+            document.location = url + '?token=' + response.data;
+          }).catch(showError);
+        }).catch(showError);
+      });
+    });
+  </script>
+</html>

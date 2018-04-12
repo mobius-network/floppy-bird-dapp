@@ -1,6 +1,5 @@
-GIT
+PATH
   remote: ../mobius-client-ruby
-  revision: 42e5ea8e209763a77f1d8bd6a679b4a7f4bf3ec1
   specs:
     mobius-client (0.1.0)
       dry-initializer (~> 2.4)
