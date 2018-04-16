@@ -1,24 +1,34 @@
-# README
+# Floppy Bird Mobius DApp
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Sample Mobius DApp Store application implemented using Ruby and the [Mobius DApp Store Ruby SDK](https://github.com/mobius-network/mobius-client-ruby).
 
-Things you may want to cover:
+## Setup
 
-* Ruby version
+1. Clone https://github.com/mobius-network/mobius-client-ruby into `../mobius-client-ruby`
 
-* System dependencies
+2. Run:
 
-* Configuration
 
-* Database creation
+    bundle
+    mobius-cli create dev-wallet
+    mv dev-wallet.html public/
 
-* Database initialization
+## Testing
 
-* How to run the test suite
+1. Start the server: `rails s`
 
-* Services (job queues, cache servers, search engines, etc.)
+2. Visit http://localhost:3000/dev-wallet.html
 
-* Deployment instructions
+3. 
 
-* ...
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/mobius-network/mobius-client-ruby. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+## Code of Conduct
+
+Everyone interacting in the Mobius::Client project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/mobius-client/blob/master/CODE_OF_CONDUCT.md).

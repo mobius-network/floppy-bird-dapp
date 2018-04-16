@@ -31,3 +31,5 @@
 .env
 .env.*
 /spec/examples.txt
+
+/public/dev-wallet.html
