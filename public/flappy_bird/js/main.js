@@ -85,7 +85,7 @@ $(document).ready(function() {
    showSplash();
 
    $.get("/balance?token=" + g_token, function(data) {
-      $("#credits_balance").html("Each Play is 2 Credits!! You have " + data + " credits!")
+      $("#credits_balance").html("Each Play is 5 Credits!! You have " + data + " credits!")
    })
 });
 
@@ -147,14 +147,14 @@ function startGame() {
 
   $("#credits_balance").html("Paying.........");
 
-   $.post("/pay?token=" + g_token, {num_tokens: 2})
+   $.post("/pay?token=" + g_token)
      .done(function (data) {
-         $("#credits_balance").html("Each Play is 2 Credits!! You have " + data + " credits!");
+         $("#credits_balance").html("Each Play is 5 Credits!! You have " + data + " credits!");
 
          startGameReal();
        }
      ).fail(function (data) {
-           $("#credits_balance").html("Each Play is 2 Credits!! You have " + data + " credits! Not enough to play!! Please buy more at <a href='https://mobius.network/store'>Mobius Store</a>");
+           $("#credits_balance").html("Each Play is 5 Credits!! You have " + data + " credits! Not enough to play!! Please buy more at <a href='https://mobius.network/store'>Mobius Store</a>");
 
            alert("Oh no you don't have enough credits!! Buy more credits at https://mobius.network/store");
         }
