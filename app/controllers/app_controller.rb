@@ -1,12 +1,15 @@
 class AppController < ApplicationController
   skip_before_action :verify_authenticity_token, :only => [:pay]
 
-  # GET /
-  def index
-    # User has opened application page directly
-    return render plain: "Visit https://store.mobius.network to register in DApp Store" unless app
+  ROUND_PRICE = 5
 
-    # User has not granted his account access to this application, "Visit store.mobius.wallet and allow"
+  # GET /
+  # User opens the application passing in the token variable.
+  def index
+    # User has opened application page without a token
+    return render plain: "Visit https://store.mobius.network to register in the DApp Store" unless app
+
+    # User has not granted access to his MOBI account so we can't use it for payments
     return render plain: "Visit https://store.mobius.network and open our app" unless app.authorized?
 
     redirect_to "/flappy_bird/index.html?token=#{token_s}"
@@ -19,7 +22,7 @@ class AppController < ApplicationController
 
   # POST /pay
   def pay
-    app.pay(params[:num_tokens])
+    app.pay(ROUND_PRICE)
     render plain: app.balance
   rescue Mobius::Client::Error::InsufficientFunds
     render :gone
