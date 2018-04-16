@@ -2,8 +2,8 @@ class AuthController < ApplicationController
   skip_before_action :verify_authenticity_token, :only => [:authenticate]
 
   # GET /auth
+  # Generates and returns challenge transaction XDR signed by application to user
   def challenge
-    # Generates and returns challenge transaction XDR signed by application to user
     render plain: Mobius::Client::Auth::Challenge.call(
       Rails.application.secrets.app[:secret_key], # SA2VTRSZPZ5FIC.....I4QD7LBWUUIK
       12.hours                                    # Session duration
@@ -11,10 +11,10 @@ class AuthController < ApplicationController
   end
 
   # POST /auth
+  # Validates challenge transaction. It must be:
+  #   - Signed by application and requesting user.
+  #   - Not older than 10 seconds from now (see Mobius::Client.strict_interval`)
   def authenticate
-    # Validates challenge transaction. It must be:
-    #   - Signed by application and requesting user.
-    #   - Not older than 10 seconds from now (see Mobius::Client.strict_interval`)
     token = Mobius::Client::Auth::Token.new(
       Rails.application.secrets.app[:secret_key], # SA2VTRSZPZ5FIC.....I4QD7LBWUUIK
       params[:xdr],                               # Challenge transaction
@@ -31,7 +31,6 @@ class AuthController < ApplicationController
     render plain: Mobius::Client::Auth::Jwt.new(
       Rails.application.secrets.app[:jwt_secret]
     ).encode(token)
-
   rescue Mobius::Client::Error::Unauthorized
     # Signatures are invalid
     render plain: "Access denied!"
