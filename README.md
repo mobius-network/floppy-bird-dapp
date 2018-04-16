@@ -12,10 +12,17 @@ Sample Mobius DApp Store application implemented using Ruby and the [Mobius DApp
     bundle
     mobius-cli create dev-wallet
     mv dev-wallet.html public/
+    
+    
+3. Start the server with `rails s`
+
+4. Open http://localhost:3000/dev-wallet.html and copy the Application secret key.
+
+5. Open config/secrets.yml and paste the secret key in line 22 for the secret_key value.
 
 ## Testing
 
-1. Start the server: `rails s`
+1. If the server isn't running start it with: `rails s`
 
 2. Visit http://localhost:3000/dev-wallet.html
 
