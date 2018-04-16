@@ -26,7 +26,9 @@ Sample Mobius DApp Store application implemented using Ruby and the [Mobius DApp
 
 2. Visit http://localhost:3000/dev-wallet.html
 
-3. 
+3. Click Open under Normal Account.
+
+4. Play Floppy Bird! Note when you click to start playing there is a pause of a couple seconds because it is in real-time making a blockchain payment! In a real app you would withdraw a larger number of MOBI at once to have some locally on deposit for the user to charge against.
 
 ## Contributing
 
