@@ -7,12 +7,11 @@ Sample Mobius DApp Store application implemented using Ruby and the [Mobius DApp
 1. Clone https://github.com/mobius-network/mobius-client-ruby into `../mobius-client-ruby`
 
 2. Run:
-
-
-    bundle
-    mobius-cli create dev-wallet
-    mv dev-wallet.html public/
-    
+ ```
+bundle
+mobius-cli create dev-wallet
+mv dev-wallet.html public/
+ ```   
     
 3. Start the server with `rails s`
 
