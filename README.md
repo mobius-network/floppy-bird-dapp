@@ -1,4 +1,4 @@
-# Floppy Bird Mobius DApp
+# Mobius Floppy Bird DApp
 
 Sample Mobius DApp Store application implemented using Ruby and the [Mobius DApp Store Ruby SDK](https://github.com/mobius-network/mobius-client-ruby).
 
