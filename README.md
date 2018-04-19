@@ -56,7 +56,7 @@ The client side code is similarly very simple. It started as a fork of <https://
 
 To add MOBI payment support we made the following changes
 
-[index.html](https://github.com/mobius-network/floppy-bird-dapp/blob/master/public/flappy_bird/js/index.html):
+[index.html](https://github.com/mobius-network/floppy-bird-dapp/blob/master/public/flappy_bird/index.html):
  
 1. We added a div `#credits_balance` on [line 41](https://github.com/mobius-network/floppy-bird-dapp/blob/master/public/flappy_bird/index.html#L41) to show info such as the player's current MOBI balance.
  
