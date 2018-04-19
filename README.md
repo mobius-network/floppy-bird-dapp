@@ -15,7 +15,7 @@ mv dev-wallet.html public/
 
 3. Open http://localhost:3000/dev-wallet.html and copy the Application Private Key.
 
-4. Open (https://github.com/mobius-network/floppy-bird-dapp/blob/master/config/secrets.yml)[config/secrets.yml] and paste the secret key in the shared/app/secret_key value.
+4. Open [config/secrets.yml](https://github.com/mobius-network/floppy-bird-dapp/blob/master/config/secrets.yml) and paste the secret key in the shared/app/secret_key value.
 
 ```
 shared:
@@ -44,17 +44,33 @@ The server side code is very simple and is copied from the [Mobius DApp Store Ru
 
 There are two parts to the server code:
 
-1) Authentication - located in [https://github.com/mobius-network/floppy-bird-dapp/blob/master/app/controllers/auth_controller.rb](app/controllers/auth_controller.rb)
+1) Authentication - located in [app/controllers/auth_controller.rb](https://github.com/mobius-network/floppy-bird-dapp/blob/master/app/controllers/auth_controller.rb)
 
-2) Payment - located in [https://github.com/mobius-network/floppy-bird-dapp/blob/master/app/controllers/app_controller.rb](app/controllers/app_controller.rb)
+2) Payment - located in [app/controllers/app_controller.rb](https://github.com/mobius-network/floppy-bird-dapp/blob/master/app/controllers/app_controller.rb)
 
 Both are documented in the [Mobius DApp Store Ruby SDK](https://github.com/mobius-network/mobius-client-ruby).
 
 ### Client Side
 
-The client side code is similarly very simple. It started as a fork of <https://github.com/nebez/floppybird/> and is located in [https://github.com/mobius-network/floppy-bird-dapp/tree/master/public/flappy_bird](public/flappy_bird).
+The client side code is similarly very simple. It started as a fork of <https://github.com/nebez/floppybird/> and is located in [public/flappy_bird](https://github.com/mobius-network/floppy-bird-dapp/tree/master/public/flappy_bird).
 
+To add MOBI payment support we made the following changes
 
+[index.html](https://github.com/mobius-network/floppy-bird-dapp/blob/master/public/flappy_bird/js/index.html):
+ 
+1. We added a div `#credits_balance` on [line 41](https://github.com/mobius-network/floppy-bird-dapp/blob/master/public/flappy_bird/index.html#L41) to show info such as the player's current MOBI balance.
+ 
+[main.js](https://github.com/mobius-network/floppy-bird-dapp/blob/master/public/flappy_bird/js/main.js).
+
+1. The code expects the `token` value used to identify this user to be passed in via the URL `token` parameter and we save it in a new variable `g_token` on [line 69](https://github.com/mobius-network/floppy-bird-dapp/blob/master/public/flappy_bird/js/main.js#L69)
+
+2. In the `$(document).ready` callback function on [line 87](https://github.com/mobius-network/floppy-bird-dapp/blob/master/public/flappy_bird/js/main.js#L87) we get the player's balance from the server by calling the `/balance` endpoint and pass in the `g_token` value to identify the current player. The `#credits_balance` div is updated with the value on response.
+
+3. On [line 141](https://github.com/mobius-network/floppy-bird-dapp/blob/master/public/flappy_bird/js/main.js#L141) we create a new `startGame` function that delays starting a new game until payment is successful. On successful payment it calls `startGameReal` the original `startGame` function. 
+
+In the `startGame` function on [line 148](https://github.com/mobius-network/floppy-bird-dapp/blob/master/public/flappy_bird/js/main.js#L148) we updated the `#credits_balance` div to say "Paying........."
+
+On [line 150](https://github.com/mobius-network/floppy-bird-dapp/blob/master/public/flappy_bird/js/main.js#L150) the `pay` server call is made passing `g_token` to identify the player. If payment is successful the game is started by calling `startGameReal` on [line 154](https://github.com/mobius-network/floppy-bird-dapp/blob/master/public/flappy_bird/js/main.js#L154).
 
 ## Contributing
 
