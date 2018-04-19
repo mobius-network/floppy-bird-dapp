@@ -15,7 +15,7 @@ mv dev-wallet.html public/
 
 3. Open http://localhost:3000/dev-wallet.html and copy the Application Private Key.
 
-4. Open config/secrets.yml and paste the secret key in the shared/app/secret_key value.
+4. Open (https://github.com/mobius-network/floppy-bird-dapp/blob/master/config/secrets.yml)[config/secrets.yml] and paste the secret key in the shared/app/secret_key value.
 
 ```
 shared:
@@ -35,6 +35,26 @@ shared:
 3. Click Open under Normal Account.
 
 4. Play Floppy Bird! Note when you click to start playing there is a pause of a couple seconds because it is in real-time making a blockchain payment! In a real app you would withdraw a larger number of MOBI at once to have some locally on deposit for the user to charge against.
+
+## Code Overview
+
+### Server Side
+
+The server side code is very simple and is copied from the [Mobius DApp Store Ruby SDK](https://github.com/mobius-network/mobius-client-ruby).
+
+There are two parts to the server code:
+
+1) Authentication - located in [https://github.com/mobius-network/floppy-bird-dapp/blob/master/app/controllers/auth_controller.rb](app/controllers/auth_controller.rb)
+
+2) Payment - located in [https://github.com/mobius-network/floppy-bird-dapp/blob/master/app/controllers/app_controller.rb](app/controllers/app_controller.rb)
+
+Both are documented in the [Mobius DApp Store Ruby SDK](https://github.com/mobius-network/mobius-client-ruby).
+
+### Client Side
+
+The client side code is similarly very simple. It started as a fork of <https://github.com/nebez/floppybird/> and is located in [https://github.com/mobius-network/floppy-bird-dapp/tree/master/public/flappy_bird](public/flappy_bird).
+
+
 
 ## Contributing
 
