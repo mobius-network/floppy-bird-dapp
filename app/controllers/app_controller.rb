@@ -12,7 +12,7 @@ class AppController < ApplicationController
     # User has not granted access to his MOBI account so we can't use it for payments
     return render plain: "Visit https://store.mobius.network and open our app" unless app.authorized?
 
-    redirect_to "/flappy_bird/index.html?token=#{token_s}"
+    redirect_to "/flappy_bird/?token=#{token_s}"
   end
 
   # GET /balance
